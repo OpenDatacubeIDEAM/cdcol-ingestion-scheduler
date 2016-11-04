@@ -1,4 +1,5 @@
 from psycopg2.extensions import connection
+from psycopg2.extras import DictCursor
 
 class IngestTask():
 
@@ -13,7 +14,7 @@ class IngestTask():
 		self.conn = connection
 
 	def get_all(self):
-		cur = self.conn.cursor()
+		cur = self.conn.cursor(cursor_factory=DictCursor)
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
@@ -21,13 +22,14 @@ class IngestTask():
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
+					'updated_at,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask;')
 		rows = cur.fetchall()
 		return rows
 
 	def get_scheduled(self):
-		cur = self.conn.cursor()
+		cur = self.conn.cursor(cursor_factory=DictCursor)
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
@@ -35,6 +37,7 @@ class IngestTask():
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
+					'updated_at,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['SCHEDULED_STATE'] + '\';')
@@ -42,7 +45,7 @@ class IngestTask():
 		return rows
 
 	def get_executing(self):
-		cur = self.conn.cursor()
+		cur = self.conn.cursor(cursor_factory=DictCursor)
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
@@ -50,6 +53,7 @@ class IngestTask():
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
+					'updated_at,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['EXECUTING_STATE'] + '\';')
@@ -57,7 +61,7 @@ class IngestTask():
 		return rows
 
 	def get_failed(self):
-		cur = self.conn.cursor()
+		cur = self.conn.cursor(cursor_factory=DictCursor)
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
@@ -65,6 +69,7 @@ class IngestTask():
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
+					'updated_at,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['FAILED_STATED'] + '\';')
@@ -72,7 +77,7 @@ class IngestTask():
 		return rows
 
 	def get_completed(self):
-		cur = self.conn.cursor()
+		cur = self.conn.cursor(cursor_factory=DictCursor)
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
@@ -80,6 +85,7 @@ class IngestTask():
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
+					'updated_at,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['COMPLETED_STATE'] + '\';')
