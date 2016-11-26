@@ -18,11 +18,14 @@ class IngestTask():
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
-					'errors,' +
+					'comments,' +
+					'error_messages,' +
+					'logs,' +
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
 					'updated_at,' +
+					'created_by_id,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask;')
 		rows = cur.fetchall()
@@ -33,11 +36,14 @@ class IngestTask():
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
-					'errors,' +
+					'comments,' +
+					'error_messages,' +
+					'logs,' +
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
 					'updated_at,' +
+					'created_by_id,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['SCHEDULED_STATE'] + '\';')
@@ -49,11 +55,14 @@ class IngestTask():
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
-					'errors,' +
+					'comments,' +
+					'error_messages,' +
+					'logs,' +
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
 					'updated_at,' +
+					'created_by_id,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['EXECUTING_STATE'] + '\';')
@@ -65,11 +74,14 @@ class IngestTask():
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
-					'errors,' +
+					'comments,' +
+					'error_messages,' +
+					'logs,' +
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
 					'updated_at,' +
+					'created_by_id,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['FAILED_STATED'] + '\';')
@@ -81,11 +93,14 @@ class IngestTask():
 		cur.execute('SELECT ' +
 					'id,' +
 					'state,' +
-					'errors,' +
+					'comments,' +
+					'error_messages,' +
+					'logs,' +
 					'start_execution_date,' +
 					'end_execution_date,' +
 					'created_at,' +
 					'updated_at,' +
+					'created_by_id,' +
 					'storage_unit_id ' +
 					'FROM ingest_ingesttask ' +
 					'WHERE state = \'' + self.STATES['COMPLETED_STATE'] + '\';')
