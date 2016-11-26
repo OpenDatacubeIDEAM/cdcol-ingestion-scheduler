@@ -4,6 +4,8 @@ from ConfigParser import ConfigParser
 from entities.LockFile import LockFile
 from entities.Connection import Connection
 from entities.IngestionTasks import IngestionTasks
+from entities.StorageUnit import StorageUnit
+from dao.StorageUnit import StorageUnit as DAOStorageUnit
 from exceptions import Exception
 import os, sys
 
@@ -32,8 +34,12 @@ try:
 
 	dbconn.connect()
 	itasks = IngestionTasks(dbconn.curr_conn)
+	dao_stgunit = DAOStorageUnit(dbconn.curr_conn)
 	itasks.load_scheduled()
-	print itasks.tasks
+	for stg_unit_id in itasks.tasks:
+		stg_unit = StorageUnit(dao_stgunit.get_by_id(stg_unit_id))
+		print stg_unit.name
+		print stg_unit.root_dir + '/' + stg_unit.ingest_file
 
 except Exception as e:
 	print 'Error: ' + str(e)
