@@ -11,7 +11,7 @@ class IngestionTasks():
 
 	def load_scheduled(self):
 		dao_itask = DAOIngestTask(self.conn)
-		for each_row in dao_itask.get_scheduled():
+		for each_row in dao_itask.get_by_state(IngestionTask.STATES['SCHEDULED_STATE']):
 			itask = IngestionTask(each_row)
 			if self.tasks.has_key(each_row['storage_unit_id']):
 				self.tasks[each_row['storage_unit_id']].append(itask)

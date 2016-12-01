@@ -1,13 +1,13 @@
+import dao.IngestTask as DAOIngestTask
+
 class IngestionTask():
-	
-	def __init__(self, _id, state, errors, start_date,  end_date, updated_at, stg_unit_id):
-		self._id = _id
-		self.state = state
-		self.errors = errors
-		self.start_execution_date= start_date
-		self.end_execution_date = end_date
-		self.updated_at = updated_at
-		self.storage_unit_id= stg_unit_id
+
+	STATES= {
+			'SCHEDULED_STATE':'1',
+			'EXECUTING_STATE':'2',
+			'FAILED_STATED':'3',
+			'COMPLETED_STATE':'4'
+			}
 
 	def __init__(self, dao_itask):
 		
@@ -22,3 +22,4 @@ class IngestionTask():
 		self.updated_at = dao_itask['updated_at']
 		self.created_by_id = dao_itask['created_by_id']
 		self.storage_unit_id = dao_itask['storage_unit_id']
+
