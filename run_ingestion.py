@@ -26,7 +26,7 @@ else:
 	lockfile.write()
 
 try:
-	print 'DATACUBE INGESTION SHCEDULER'
+	print 'DATACUBE INGESTION SCHEDULER'
 
 	dbconn = Connection(
 				host=conf.get('database','host'),
@@ -46,7 +46,7 @@ try:
 		stg_to_ingest =  TO_INGEST + '/' + stg_unit.name
 		stg_conf_file = stg_unit.root_dir + '/' + stg_unit.ingest_file
 		stg_mgen_script = stg_unit.root_dir + '/' + stg_unit.metadata_generation_script
-		
+
 		try:
 			subprocess.check_output([ING_SCRIPT, stg_to_ingest, stg_conf_file, stg_mgen_script])
 		except CalledProcessError as cpe:
