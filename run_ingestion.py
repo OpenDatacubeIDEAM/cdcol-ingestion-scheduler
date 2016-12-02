@@ -7,8 +7,8 @@ from entities.IngestionTasks import IngestionTasks
 from entities.StorageUnit import StorageUnit
 from dao.StorageUnit import StorageUnit as DAOStorageUnit
 from exceptions import Exception
-import os, sys, subprocess
-from subprocess import CalledProcessError
+import os, sys, datetime
+from subprocess import CalledProcessError, Popen, PIPE
 
 CONF_FILE = 'settings.conf'
 
@@ -47,13 +47,27 @@ try:
 		stg_conf_file = stg_unit.root_dir + '/' + stg_unit.ingest_file
 		stg_mgen_script = stg_unit.root_dir + '/' + stg_unit.metadata_generation_script
 
-		try:
-			subprocess.check_output([ING_SCRIPT, stg_to_ingest, stg_conf_file, stg_mgen_script])
-		except CalledProcessError as cpe:
-			print 'Error running ingestion script: ' + str(cpe)
+		print 'Running ingestion for ' + stg_unit.name
+
+		for each_itask in itasks.tasks[stg_unit_id]:
+
+			try:
+				each_itask.state = each_itask.STATES['EXECUTING_STATE']
+				each_itask.save()
+				p = Popen([ING_SCRIPT, stg_to_ingest, stg_conf_file, stg_mgen_script], stdout=PIPE, stderr=PIPE)
+				stdout, stderr = p.communicate()
+				each_itask.end_execution_date = str(datetime.datetime.now())
+				each_itask.logs = stdout
+				each_itask.error_messages = stderr
+				if stdout.endswith('0 failed'):
+					each_itask.state = each_itask.STATES['COMPLETED_STATE']
+				else:
+					each_itask.state = each_itask.STATES['FAILED_STATE']
+				each_itask.save()
+			except CalledProcessError as cpe:
+				print 'Error running ingestion script: ' + str(cpe)
 
 except Exception as e:
 	print 'Error: ' + str(e)
-	raise e
 finally:
 	lockfile.delete()
