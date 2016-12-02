@@ -11,7 +11,11 @@ do
 	for ds in `gdalinfo $file |grep -Eo "NETCDF.*"`
 	do
 		bn=`basename $file`
-		echo "Escribiendo los thumbnails para el archivo $file y la banda ${ds##*\:}"
-		gdal_translate -a_srs EPSG:32618 -a_nodata -9999 -stats -of PNG -scale -outsize $X_RES $Y_RES $ds $THUMBNAILS_FOLDER/${bn%.nc}.${ds##*\:}.png
+		if [ ${ds##*\:} != 'dataset' ]
+		then
+			echo "Escribiendo los thumbnails para el archivo $file y la banda ${ds##*\:}"
+			gdal_translate -a_srs EPSG:32618 -a_nodata -9999 -stats -of PNG -scale -outsize $X_RES $Y_RES $ds $THUMBNAILS_FOLDER/${bn%.nc}.${ds##*\:}.png
+			convert -transparent "#000000" $THUMBNAILS_FOLDER/${bn%.nc}.${ds##*\:}.png  $THUMBNAILS_FOLDER/${bn%.nc}.${ds##*\:}.png
+		fi
 	done
 done
