@@ -22,6 +22,7 @@ WEB_THUMBNAILS = conf.get('paths','web_thumbnails')
 THUMB_SCRIPT = conf.get('other', 'thumb_script')
 THUMB_X_RES = conf.get('other', 'thumb_x_res')
 THUMB_Y_RES = conf.get('other', 'thumb_y_res')
+THUMB_COLORS = conf.get('other', 'thumb_colors')
 
 lockfile = LockFile(conf.get('other','lock_file'))
 if lockfile.search():
@@ -79,7 +80,7 @@ try:
 
 		print 'Generating thumbnails for ' + stg_unit.name
 		try:
-			p = Popen([THUMB_SCRIPT, stg_unit.root_dir, stg_web_thumbnails, THUMB_X_RES, THUMB_Y_RES], stdout=PIPE, stderr=PIPE)
+			p = Popen([THUMB_SCRIPT, stg_unit.root_dir, stg_web_thumbnails, THUMB_X_RES, THUMB_Y_RES, THUMB_COLORS], stdout=PIPE, stderr=PIPE)
 			stdout, stderr = p.communicate()
 			with open('thumbnails.log', 'w') as ofile:
 				ofile.write(stdout)
