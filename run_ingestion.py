@@ -57,6 +57,7 @@ try:
 		for each_itask in itasks.tasks[stg_unit_id]:
 
 			try:
+				each_itask.start_execution_date = str(datetime.datetime.now())
 				each_itask.state = each_itask.STATES['EXECUTING_STATE']
 				each_itask.save()
 				p = Popen([ING_SCRIPT, stg_to_ingest, stg_conf_file, stg_mgen_script], stdout=PIPE, stderr=PIPE)
