@@ -11,7 +11,7 @@ class IngestionTask():
 			}
 
 	def __init__(self, dao_itask, conn=None):
-		
+
 		self.conn = conn
 		self._id = dao_itask['id']
 		self.state = dao_itask['state']
@@ -26,7 +26,7 @@ class IngestionTask():
 		self.storage_unit_id = dao_itask['storage_unit_id']
 
 	def save(self):
-		
+
 		self.updated_at = str(datetime.datetime.now())
 
 		dao_itask = DAOIngestTask(self.conn)

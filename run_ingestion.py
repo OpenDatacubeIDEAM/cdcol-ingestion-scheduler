@@ -18,6 +18,11 @@ conf.read(CONF_FILE)
 TO_INGEST = conf.get('paths','to_ingest')
 ING_SCRIPT = conf.get('other','ing_script')
 
+WEB_THUMBNAILS = conf.get('paths','web_thumbnails')
+THUMB_SCRIPT = conf.get('other', 'thumb_script')
+THUMB_X_RES = conf.get('other', 'thumb_x_res')
+THUMB_Y_RES = conf.get('other', 'thumb_y_res')
+
 lockfile = LockFile(conf.get('other','lock_file'))
 if lockfile.search():
 	print 'There\'s an execution in progress'
@@ -66,6 +71,21 @@ try:
 				each_itask.save()
 			except CalledProcessError as cpe:
 				print 'Error running ingestion script: ' + str(cpe)
+
+	for stg_unit_id in itasks.tasks:
+		stg_unit = StorageUnit(dao_stgunit.get_by_id(stg_unit_id))
+		stg_web_thumbnails = WEB_THUMBNAILS + '/' + stg_unit.name
+
+		print 'Generating thumbnails for ' + stg_unit.name
+		try:
+			p = Popen([THUMB_SCRIPT, stg_unit.root_dir, stg_web_thumbnails, THUMB_X_RES, THUMB_Y_RES], stdout=PIPE, stderr=PIPE)
+			stdout, stderr = p.communicate()
+			with open('thumbnails.log', 'w') as ofile:
+				ofile.write(stdout)
+			with open('thumbnails.err', 'w') as ofile:
+				ofile.write(stderr)
+		except CalledProcessError as cpe:
+			print 'Error generating storage unit thumbnails'
 
 except Exception as e:
 	print 'Error: ' + str(e)
