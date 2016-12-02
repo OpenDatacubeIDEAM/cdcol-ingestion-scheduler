@@ -17,7 +17,7 @@ then
 	threads=1
 fi
 
-for archivo in *.tar.gz
+for archivo in $(find . -maxdepth 1 -name '*.tar.gz' -printf '%f\n')
 do
 
 	folder="$basePath/tmp/${archivo%%-*}"
