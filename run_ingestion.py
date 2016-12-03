@@ -7,7 +7,7 @@ from entities.IngestionTasks import IngestionTasks
 from entities.StorageUnit import StorageUnit
 from dao.StorageUnit import StorageUnit as DAOStorageUnit
 from exceptions import Exception
-import os, sys, datetime
+import os, sys, datetime, glob
 from subprocess import CalledProcessError, Popen, PIPE
 
 CONF_FILE = 'settings.conf'
@@ -66,8 +66,10 @@ try:
 				each_itask.end_execution_date = str(datetime.datetime.now())
 				each_itask.logs = stdout
 				each_itask.error_messages = stderr
-				if stdout.endswith('0 failed'):
+				if stdout.endswith(' 0 failed\n'):
 					each_itask.state = each_itask.STATES['COMPLETED_STATE']
+					for each_file in glob.glob(stg_to_ingest + '/*.tar.gz' ):
+						os.remove(each_file)
 				else:
 					each_itask.state = each_itask.STATES['FAILED_STATE']
 				each_itask.save()
