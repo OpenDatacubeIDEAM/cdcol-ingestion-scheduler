@@ -6,6 +6,8 @@ X_RES="$3"
 Y_RES="$4"
 COLORS="$5"
 
+source $HOME/.bashrc
+
 mkdir -p $THUMBNAILS_FOLDER
 for file in $STG_UNIT_FOLDER/*.nc
 do

@@ -30,7 +30,7 @@ class IngestTask():
 		query = ('UPDATE ingest_ingesttask SET ' +
 				'state=' + str(state) + ', ' +
 				'comments=\'' + str(comments) + '\',' +
-				'error_messages=\'' + str(error_messages) + '\',' +
+				'error_messages=\'' + str(error_messages).replace('\'', '"') + '\',' +
 				'logs=\'' + str(logs) + '\',' +
 				'start_execution_date=\'' + str(start_execution_date) + '\',' +
 				'end_execution_date=\'' + str(end_execution_date) + '\',' +
