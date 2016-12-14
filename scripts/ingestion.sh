@@ -3,6 +3,10 @@
 # sudo renice -10 $$
 
 # SET VARIABLES
+PYTHON='anaconda_python_bin'
+DATACUBE='anaconda_datacube_bin'
+
+
 basePath="$1" # Storage Unit folder to Ingest
 configFile="$2" # Ingestion file on YAML format
 mgen_script="$3" # Metadata generation script on python
@@ -23,9 +27,9 @@ do
 	folder="$basePath/tmp/${archivo%%-*}"
 	mkdir -p $folder && tar -xzf $archivo -C $folder
 
-	python $mgen_script $folder && datacube dataset add -a $folder
+	$PYTHON $mgen_script $folder && $DATACUBE dataset add -a $folder
 
 done
 
-datacube ingest --executor multiproc $threads -c $configFile
+$DATACUBE ingest --executor multiproc $threads -c $configFile
 rm -rf "$basePath/tmp"

@@ -13,3 +13,6 @@ class Connection():
 		conn_str = "dbname='%s' user='%s' host='%s' password='%s'"
 		conn_str = conn_str % (self.name, self.user, self.host, self.password)
 		self.curr_conn = psycopg2.connect(conn_str)
+
+	def close(self):
+		self.curr_conn.close()

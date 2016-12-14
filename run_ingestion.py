@@ -7,7 +7,7 @@ from entities.IngestionTasks import IngestionTasks
 from entities.StorageUnit import StorageUnit
 from dao.StorageUnit import StorageUnit as DAOStorageUnit
 from exceptions import Exception
-import os, sys, datetime, glob
+import os, sys, datetime, glob, traceback
 from subprocess import CalledProcessError, Popen, PIPE
 
 CONF_FILE = 'settings.conf'
@@ -92,6 +92,8 @@ try:
 			print 'Error generating storage unit thumbnails'
 
 except Exception as e:
-	print 'Error: ' + str(e)
+	#print 'Error: ' + str(e)
+	traceback.print_exc()
 finally:
 	lockfile.delete()
+	dbconn.close()
