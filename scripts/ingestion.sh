@@ -26,10 +26,10 @@ do
 
 	folder="$basePath/tmp/${archivo%%-*}"
 	mkdir -p $folder && tar -xzf $archivo -C $folder
-    
-	$PYTHON $mgen_script $folder && $DATACUBE dataset add -a $folder
+
+	$PYTHON $mgen_script $folder && $DATACUBE dataset add $folder
 
 done
-
-$DATACUBE ingest --executor multiproc $threads -c $configFile
+#$DATACUBE -v ingest --allow-product-changes --executor multiproc $threads -c $configFile
+$DATACUBE -v ingest --executor multiproc $threads -c $configFile
 rm -rf "$basePath/tmp"
