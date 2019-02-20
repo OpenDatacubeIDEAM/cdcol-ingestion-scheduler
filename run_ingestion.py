@@ -66,7 +66,7 @@ try:
 				each_itask.end_execution_date = str(datetime.datetime.now())
 				each_itask.logs = stdout.decode('ascii')
 				each_itask.error_messages = stderr.decode('ascii')
-				if stdout.endswith(' 0 failed\n'):
+				if each_itask.logs.endswith(' 0 failed\n'):
 					each_itask.state = each_itask.STATES['COMPLETED_STATE']
 					for each_file in glob.glob(stg_to_ingest + '/*.tar.gz' ):
 						os.remove(each_file)
