@@ -1,6 +1,6 @@
 # Datacube Ingestion Scheduler
 
-from ConfigParser import ConfigParser
+from configparser import ConfigParser
 from entities.LockFile import LockFile
 from entities.Connection import Connection
 from entities.IngestionTasks import IngestionTasks
