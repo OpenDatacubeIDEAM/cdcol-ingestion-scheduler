@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PYTHON='/home/cubo/anaconda2/bin/python'
+PYTHON='/home/cubo/anaconda/bin/python3'
 export GDAL_DATA="${GDAL_DATA:-/usr/share/gdal/1.11}"
 
 echo "$(date) RUNNING INGESTION SCHEDULER"

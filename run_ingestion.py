@@ -26,13 +26,13 @@ THUMB_COLORS = conf.get('other', 'thumb_colors')
 
 lockfile = LockFile(conf.get('other','lock_file'))
 if lockfile.search():
-	print 'There\'s an execution in progress'
+	print ('There\'s an execution in progress')
 	sys.exit(1)
 else:
 	lockfile.write()
 
 try:
-	print 'DATACUBE INGESTION SCHEDULER'
+	print ('DATACUBE INGESTION SCHEDULER')
 
 	dbconn = Connection(
 				host=conf.get('database','host'),
@@ -53,7 +53,7 @@ try:
 		stg_conf_file = stg_unit.root_dir + '/' + stg_unit.ingest_file
 		stg_mgen_script = stg_unit.root_dir + '/' + stg_unit.metadata_generation_script
 
-		print 'Running ingestion for ' + stg_unit.name
+		print('Running ingestion for ' + stg_unit.name)
 
 		for each_itask in itasks.tasks[stg_unit_id]:
 
@@ -74,13 +74,13 @@ try:
 					each_itask.state = each_itask.STATES['FAILED_STATE']
 				each_itask.save()
 			except CalledProcessError as cpe:
-				print 'Error running ingestion script: ' + str(cpe)
+				print('Error running ingestion script: ' + str(cpe))
 
 	for stg_unit_id in itasks.tasks:
 		stg_unit = StorageUnit(dao_stgunit.get_by_id(stg_unit_id))
 		stg_web_thumbnails = WEB_THUMBNAILS + '/' + stg_unit.name
 
-		print 'Generating thumbnails for ' + stg_unit.name
+		print('Generating thumbnails for ' + stg_unit.name)
 		try:
 			p = Popen([THUMB_SCRIPT, stg_unit.root_dir, stg_web_thumbnails, THUMB_X_RES, THUMB_Y_RES, THUMB_COLORS], stdout=PIPE, stderr=PIPE)
 			stdout, stderr = p.communicate()
@@ -89,7 +89,7 @@ try:
 			with open('thumbnails.err', 'w') as ofile:
 				ofile.write(stderr)
 		except CalledProcessError as cpe:
-			print 'Error generating storage unit thumbnails'
+			print('Error generating storage unit thumbnails')
 
 except Exception as e:
 	#print 'Error: ' + str(e)

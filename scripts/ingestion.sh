@@ -3,8 +3,8 @@
 # sudo renice -10 $$
 
 # SET VARIABLES
-PYTHON='/home/cubo/anaconda2/bin/python'
-DATACUBE='/home/cubo/anaconda2/bin/datacube'
+PYTHON='/home/cubo/anaconda/bin/python3'
+DATACUBE='/home/cubo/anaconda/bin/datacube3'
 
 
 basePath="$1" # Storage Unit folder to Ingest
