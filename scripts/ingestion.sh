@@ -4,7 +4,7 @@
 
 # SET VARIABLES
 PYTHON='/home/cubo/anaconda/bin/python3'
-DATACUBE='/home/cubo/anaconda/bin/datacube3'
+DATACUBE='/home/cubo/anaconda/bin/datacube'
 
 
 basePath="$1" # Storage Unit folder to Ingest
@@ -26,7 +26,7 @@ do
 
 	folder="$basePath/tmp/${archivo%%-*}"
 	mkdir -p $folder && tar -xzf $archivo -C $folder
-
+    
 	$PYTHON $mgen_script $folder && $DATACUBE dataset add -a $folder
 
 done
