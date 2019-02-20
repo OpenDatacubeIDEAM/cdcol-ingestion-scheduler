@@ -6,7 +6,7 @@ from entities.Connection import Connection
 from entities.IngestionTasks import IngestionTasks
 from entities.StorageUnit import StorageUnit
 from dao.StorageUnit import StorageUnit as DAOStorageUnit
-from exceptions import Exception
+from builtins import Exception
 import os, sys, datetime, glob, traceback
 from subprocess import CalledProcessError, Popen, PIPE
 
