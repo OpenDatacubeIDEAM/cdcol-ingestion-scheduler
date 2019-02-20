@@ -1,4 +1,4 @@
-from IngestionTask import IngestionTask
+from entities.IngestionTask import IngestionTask
 from dao.IngestTask import IngestTask as DAOIngestTask
 import os
 
