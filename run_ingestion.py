@@ -64,8 +64,8 @@ try:
 				p = Popen([ING_SCRIPT, stg_to_ingest, stg_conf_file, stg_mgen_script], stdout=PIPE, stderr=PIPE)
 				stdout, stderr = p.communicate()
 				each_itask.end_execution_date = str(datetime.datetime.now())
-				each_itask.logs = stdout
-				each_itask.error_messages = stderr
+				each_itask.logs = stdout.decode('ascii')
+				each_itask.error_messages = stderr.decode('ascii')
 				if stdout.endswith(' 0 failed\n'):
 					each_itask.state = each_itask.STATES['COMPLETED_STATE']
 					for each_file in glob.glob(stg_to_ingest + '/*.tar.gz' ):
