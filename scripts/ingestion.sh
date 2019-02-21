@@ -31,5 +31,5 @@ do
 
 done
 #$DATACUBE -v ingest --allow-product-changes --executor multiproc $threads -c $configFile
-$DATACUBE -v ingest --executor multiproc $threads -c $configFile
+$DATACUBE ingest --executor multiproc $threads -c $configFile
 rm -rf "$basePath/tmp"
