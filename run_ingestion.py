@@ -85,9 +85,9 @@ try:
 			p = Popen([THUMB_SCRIPT, stg_unit.root_dir, stg_web_thumbnails, THUMB_X_RES, THUMB_Y_RES, THUMB_COLORS], stdout=PIPE, stderr=PIPE)
 			stdout, stderr = p.communicate()
 			with open('thumbnails.log', 'w') as ofile:
-				ofile.write(stdout)
+				ofile.write(stdout.decode('ascii'))
 			with open('thumbnails.err', 'w') as ofile:
-				ofile.write(stderr)
+				ofile.write(stderr.decode('ascii'))
 		except CalledProcessError as cpe:
 			print('Error generating storage unit thumbnails')
 
