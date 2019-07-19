@@ -30,6 +30,6 @@ do
 	$PYTHON $mgen_script $folder && $DATACUBE dataset add $folder
 
 done
-#$DATACUBE -v ingest --allow-product-changes --executor multiproc $threads -c $configFile
-$DATACUBE ingest --executor multiproc $threads -c $configFile
+$DATACUBE ingest --allow-product-changes --executor multiproc $threads -c $configFile
+#$DATACUBE ingest --executor multiproc $threads -c $configFile
 rm -rf "$basePath/tmp"
