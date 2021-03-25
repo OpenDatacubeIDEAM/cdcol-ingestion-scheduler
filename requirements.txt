@@ -1,2 +1,2 @@
 psycopg2==2.6.2
-PyYAML==3.12
+PyYAML==5.4
